@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+ <script src="https://cdn.ckeditor.com/4.20.0/standard-all/ckeditor.js"></script>
+ <style>
+
+    .ckeditor{
+        box-shadow: 2px 2px 5px 0px #80808054;
+    }
+ </style>
+</head>
+
+<body>
+ <form>
+    <div class="ckeditor">
+        <textarea placeholder="Describe the task..." class="form-control" type="text" name="task_description_details"></textarea>
+        <!-- <p id="task_descriptionCharacterCount" style="color: red;"></p> -->
+    </div>
+    <script>
+        // character count function
+        document.addEventListener("DOMContentLoaded", function () {
+          // Replace the textareas with CKEditor instances
+          CKEDITOR.replace("task_description_details");
+
+          // Attach a function to the change event for each CKEditor instance
+          ["task_description"].forEach(function (editorId) {
+            var editor = CKEDITOR.instances[editorId + "_details"];
+
+            editor.on("change", function () {
+              // Update character count display for each CKEditor instance
+              updateCharacterCount(editorId);
+            });
+
+            // Update character count initially
+            updateCharacterCount(editorId);
+          });
+        });
+
+        function updateCharacterCount(editorId) {
+          var editorContent =
+            CKEDITOR.instances[editorId + "_details"].getData();
+
+          // Handle special space representations
+          var cleanedContent = editorContent
+            .replace(/<[^>]*>/g, "")
+            .replace(/&nbsp;/g, " ")
+            .trim();
+
+          // Count each character (including spaces)
+          var characterCount = cleanedContent.length;
+
+          var characterCountElement = document.getElementById(
+            editorId + "CharacterCount"
+          );
+
+          // Check conditions and update text color and content
+          if (characterCount === 0) {
+            characterCountElement.style.color = "black";
+            characterCountElement.innerText = "Character Count: 0";
+          } else {
+            characterCountElement.innerText =
+              "Character Count: " + characterCount;
+          }
+        }
+    </script>
+ </form>
+</body>
+</html>
