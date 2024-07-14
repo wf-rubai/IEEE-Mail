@@ -14,6 +14,7 @@
             margin: 0;
             padding: 20px;
             background-color: #f4f4f4;
+            color: #414141;
         }
 
         .editor-container {
@@ -153,6 +154,42 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%;
+            border-radius: 5px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -271,9 +308,20 @@
 
     
             <div class="editor-buttons">
-                <button class="cancel-btn">Cancel</button>
-                <button class="view-btn">View</button>
-                <button class="send-btn">Send</button>
+                <button type="button" class="cancel-btn">Cancel</button>
+                <button type="button" class="view-btn">View</button>
+                <button type="button" class="send-btn">Send</button>
+            </div>
+
+            <div id="viewModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <!-- <label for="receivers-list">Receivers:</label>
+                    <select id="receivers-list" multiple></select> -->
+                    <h2 id="modal-title"></h2>
+                    <div id="modal-body"></div>
+                    <p id="modal-datetime"></p>
+                </div>
             </div>
         </div>
 
@@ -340,6 +388,55 @@
                 });
             });
         </script>
+        <script>
+            document.querySelector('.view-btn').addEventListener('click', function() {
+                // Get the title and body
+                let title = document.getElementById('mail-title').value;
+                let body = CKEDITOR.instances["task_description_details"].getData();
+                
+                // Set the modal title and body
+                document.getElementById('modal-title').innerText = title;
+                document.getElementById('modal-body').innerHTML = body;
+                
+                // Set the date and time
+                let currentDateTime = new Date();
+                let dateTimeString = currentDateTime.getUTCDate().toLocaleString();
+                dateTimeString += '/';
+                dateTimeString += currentDateTime.getMonth().toLocaleString();
+                dateTimeString += '/';
+                dateTimeString += currentDateTime.getFullYear().toLocaleString().replace(',','');
+                document.getElementById('modal-datetime').innerText = dateTimeString;
+                
+                // Populate the receivers list
+                // let receiversList = document.getElementById('receivers-list');
+                // receiversList.innerHTML = ''; // Clear previous options
+                // document.querySelectorAll('#persons-table tbody input[type="checkbox"]:checked').forEach(checkbox => {
+                //     let row = checkbox.closest('tr');
+                //     let name = row.cells[1].innerText;
+                //     let option = document.createElement('option');
+                //     option.text = name;
+                //     receiversList.add(option);
+                // });
+                
+                // Show the modal
+                let modal = document.getElementById('viewModal');
+                modal.style.display = "block";
+            });
+        
+            // Close the modal when the user clicks on <span> (x)
+            document.querySelector('.modal .close').addEventListener('click', function() {
+                let modal = document.getElementById('viewModal');
+                modal.style.display = "none";
+            });
+        
+            // Close the modal when the user clicks anywhere outside of the modal
+            window.onclick = function(event) {
+                let modal = document.getElementById('viewModal');
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>        
         
     </form>
 </body>

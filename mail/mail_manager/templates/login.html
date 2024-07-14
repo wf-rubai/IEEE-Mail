@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #414141;
+        }
+
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .login-btn {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            /* border: 2px solid #5c5fb8; */
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #5c5fb8;
+            color: #ffffff;
+        }
+
+        .login-btn:hover {
+            background-color: #5054c3;
+        }
+
+        .signup-btn {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .signup-btn:hover {
+            background-color: #c4c4c475;
+        }
+    </style>
+</head>
+<body>
+    <form style="width: 30%;">
+        <div class="login-container">
+            <h2>Login</h2>
+            <input type="text" id="user-id" placeholder="Enter your ID">
+            <input type="password" id="user-password" placeholder="Enter your password">
+            <div class="login-btn">Login</div>
+            <div class="signup-btn" onclick="signinPage()">Sign Up</div>
+        </div>
+
+        <script>
+            function signinPage() {
+                window.location.href = '/signin/';
+            }
+        </script>
+    </form>
+    
+</body>
+</html>
