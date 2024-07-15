@@ -169,27 +169,94 @@
         }
 
         .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
+            background-color: #ffffff;
+            margin: 15px;
+            padding: 0px 20px 20px 20px;
+            border: 1px solid #888;
+            width: 500px;
+            border-radius: 5px;
+            max-height: 600px;
+            overflow: auto;
+            position: relative;
+        }
+
+        .modal-content h1{
+            color: #ffffff;
+            max-width: 450px;
+            font-size: xxx-large;
+            font-family: sans-serif;
+            position: absolute;
+            z-index: 2; /* Ensure the h1 stays above the image */
+        }
+
+        .modal-content img{
+            width: 100%;
+            scale: 1.1;
+            position: sticky;
+            top: 0;
+            z-index: 1; /* Ensure the image stays below the h1 */
+        }
+
+        .edit-modal {
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            margin: 15px;
             padding: 20px;
             border: 1px solid #888;
-            width: 60%;
+            width: 20%;
             border-radius: 5px;
+            /* position: fixed; */
+            /* right: 0; */
         }
 
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
+        .modal-link{
+            margin-top: 30px;
+            font-size: 13px;
+            background: #714ad3;
+            padding: 10px;
+            width: fit-content;
+            border-radius: 30px;
+            /* box-shadow: inset -1px 1px 3px 0px; */
         }
 
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
+        .edit-modal label {
+            margin-bottom: 5px;
+            font-weight: 100;
+            font-size: medium;
         }
+
+        .edit-modal button{
+            margin-top: 5px;
+            margin-left: 5px;
+            padding: 5px;
+            border: 1px solid #b8b8b8;
+            border-radius: 5px;
+            background: #ffffff;
+        }
+
+        .edit-modal input[type="text"] {
+            padding: 5px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 90%;
+        }
+
+        .edit-modal input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        .edit-modal input[type="color"] {
+            width: 100%;
+            background: white;
+            border: 2px solid #777777;
+            outline: 0;
+            border-radius: 15px;
+            appearance: none;
+            padding: 24px 50% 0px 50%;
+        }
+
     </style>
 </head>
 <body>
@@ -201,6 +268,11 @@
         </div>
 
         <div class="editor-container">
+            <div style="display: flex; flex-direction: column; width: 100%;">
+                <label for="mail-title">Subject:</label>
+                <input type="text" id="mail-subject" placeholder="Enter email subject">
+            </div>
+
             <div style="display: flex; justify-content: space-between;">
                 <div style="display: flex; flex-direction: column; width: 68%;">
                     <label for="mail-title">Title:</label>
@@ -218,10 +290,15 @@
                 </div>
             </div>
     
-            <label for="mail-body">Body:</label>
+            <label for="mail-url">Body:</label>
             <div class="ckeditor">
                 <textarea placeholder="Describe the task..." class="form-control" type="text" name="task_description_details"></textarea>
                 <!-- <p id="task_descriptionCharacterCount" style="color: red;"></p> -->
+            </div>
+
+            <div style="display: flex; flex-direction: column; width: 100%;">
+                <label for="mail-title">Additional Link:</label>
+                <input type="text" id="mail-url" placeholder="Enter URL">
             </div>
     
             <label for="mail-receivers">Receivers:</label>
@@ -314,13 +391,44 @@
             </div>
 
             <div id="viewModal" class="modal">
+                <div class="edit-modal" style="background-color: #41414100; border: 0;"></div>
                 <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <!-- <label for="receivers-list">Receivers:</label>
-                    <select id="receivers-list" multiple></select> -->
-                    <h2 id="modal-title"></h2>
-                    <div id="modal-body"></div>
-                    <p id="modal-datetime"></p>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <img src="https://c4.wallpaperflare.com/wallpaper/678/58/326/abstract-laser-optical-device-device-wallpaper-preview.jpg">
+                        <h1 id="modal-title"></h1>
+                    </div>
+                    <div id="modal-body" style="font-size: 14px;"></div>
+                    <div class="modal-link">
+                        See more >
+                    </div>
+                    <p id="modal-datetime" style="margin-top: 50px; font-size: 13px;"></p>
+                    <p style="margin: 0; font-size: 13px;">Mail sent from</p>
+                    <p style="margin: 0; font-size: 14px;">INSB website</p>
+                </div>
+
+                <div class="edit-modal">
+                    <h3 style="margin-top: 0;">Edit tools</h3>
+                    <div style="display: flex; align-items: flex-start;">
+                        <input type="checkbox" id="customize-image-checkbox">
+                        <label for="customize-image-checkbox">Customize Mail Title Image</label>
+                    </div>
+                    <div id="title-image" style="display: flex; flex-direction: column; margin-top: 10px; display: none;">
+                        <label for="title-image">Title Image URL:</label>
+                        <div style="display: flex; align-items: flex-start;">
+                            <input type="text" placeholder="Enter image URL">
+                            <button type="button" id="change-image-button">Add</button>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; margin-top: 10px;">
+                        <label for="custom-color">Background Color:</label>
+                        <input type="color" class="color-picker bg-color" value="#000208">
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; margin-top: 10px;">
+                        <label for="custom-color">Text Color:</label>
+                        <input type="color" class="color-picker text-color" value="#ffffff">
+                    </div>
                 </div>
             </div>
         </div>
@@ -406,29 +514,11 @@
                 dateTimeString += '/';
                 dateTimeString += currentDateTime.getFullYear().toLocaleString().replace(',','');
                 document.getElementById('modal-datetime').innerText = dateTimeString;
-                
-                // Populate the receivers list
-                // let receiversList = document.getElementById('receivers-list');
-                // receiversList.innerHTML = ''; // Clear previous options
-                // document.querySelectorAll('#persons-table tbody input[type="checkbox"]:checked').forEach(checkbox => {
-                //     let row = checkbox.closest('tr');
-                //     let name = row.cells[1].innerText;
-                //     let option = document.createElement('option');
-                //     option.text = name;
-                //     receiversList.add(option);
-                // });
-                
-                // Show the modal
                 let modal = document.getElementById('viewModal');
-                modal.style.display = "block";
+                modal.style.display = "flex";
+                modal.style.alignItems = "center"
+                modal.style.justifyContent = "center"
             });
-        
-            // Close the modal when the user clicks on <span> (x)
-            document.querySelector('.modal .close').addEventListener('click', function() {
-                let modal = document.getElementById('viewModal');
-                modal.style.display = "none";
-            });
-        
             // Close the modal when the user clicks anywhere outside of the modal
             window.onclick = function(event) {
                 let modal = document.getElementById('viewModal');
@@ -436,7 +526,103 @@
                     modal.style.display = "none";
                 }
             }
-        </script>        
+        </script>   
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const colorPicker = document.querySelector('.bg-color');
+                const colorPickertext = document.querySelector('.text-color');
+                const modalContent = document.querySelector('.modal-content');
+                const modalContentBody = document.querySelector('.modal-content');
+                function updateBackgroundColor(color) {
+                    modalContent.style.backgroundColor = color;
+                }
+                colorPicker.addEventListener('change', function() {
+                    const selectedColor = this.value;
+                    updateBackgroundColor(selectedColor);
+                });
+                function updateTextColor(color) {
+                    modalContentBody.style.color = color;
+                }
+                colorPickertext.addEventListener('change', function() {
+                    const selectedColor = this.value;
+                    updateTextColor(selectedColor);
+                });
+                updateBackgroundColor(colorPicker.value);
+                updateTextColor(colorPickertext.value);
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                var customizeCheckbox = document.getElementById('customize-image-checkbox');
+                var urlField = document.getElementById('title-image');
+                customizeCheckbox.addEventListener('change', function () {
+                    if (customizeCheckbox.checked) {
+                        urlField.style.display = 'block';  // Display the URL input field
+                    } else {
+                        urlField.style.display = 'none';   // Hide the URL input field
+                    }
+                });
+            });
+        </script>
+        <script>
+            // Function to change the image based on the provided URL
+            document.getElementById('change-image-button').addEventListener('click', function() {
+                const imageUrl = document.querySelector('#title-image input').value;
+                const modalImage = document.querySelector('.modal-content img');
+                modalImage.src = imageUrl;
+            });
+            const mailTypeImageUrls = {
+                event: 'https://c4.wallpaperflare.com/wallpaper/678/58/326/abstract-laser-optical-device-device-wallpaper-preview.jpg',
+                task: 'https://i.pinimg.com/564x/4d/97/ac/4d97ac381ab3c0cafd5c03a491278849.jpg',
+                announcement: 'https://static.vecteezy.com/system/resources/previews/011/171/975/non_2x/shouting-megaphone-illustration-on-blue-banner-background-concept-of-join-us-job-vacancy-and-announcement-in-modern-flat-cartoon-style-design-vector.jpg',
+                others: 'https://taylorhieber.co/wp-content/uploads/2021/11/Gradients-Classic.jpg'
+            };
+
+            document.getElementById('mail-type').addEventListener('change', function() {
+                const selectedType = this.value;
+                const modalImage = document.querySelector('.modal-content img');
+                modalImage.src = mailTypeImageUrls[selectedType];
+            });
+        </script>
+        <script>
+            document.getElementById('mail-url').addEventListener('input', function() {
+                const urlField = this.value.trim();
+                const modalLink = document.querySelector('.modal-link');
+                
+                if (urlField) {
+                    modalLink.style.display = 'block';
+                    modalLink.addEventListener('click', function() {
+                        window.open(urlField, '_blank');
+                    });
+                } else {
+                    modalLink.style.display = 'none';
+                }
+            });
+        
+            // Initial check on page load
+            document.addEventListener('DOMContentLoaded', function() {
+                const urlField = document.getElementById('mail-url').value.trim();
+                const modalLink = document.querySelector('.modal-link');
+                
+                if (urlField) {
+                    modalLink.style.display = 'block';
+                    modalLink.addEventListener('click', function() {
+                        window.open(urlField, '_blank');
+                    });
+                } else {
+                    modalLink.style.display = 'none';
+                }
+            });
+        </script>
+        <script>
+            document.querySelectorAll('.color-picker').forEach(picker => {
+                picker.addEventListener('input', function() {
+                    this.style.backgroundColor = this.value;
+                });
+        
+                // Initialize background color on page load
+                picker.style.backgroundColor = picker.value;
+            });
+        </script>
         
     </form>
 </body>
