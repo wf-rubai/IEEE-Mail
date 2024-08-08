@@ -228,6 +228,7 @@
             width: fit-content;
             border-radius: 30px;
             color: white;
+            cursor: pointer;
             /* box-shadow: inset -1px 1px 3px 0px; */
         }
 
@@ -266,6 +267,12 @@
             border-radius: 15px;
             appearance: none;
             padding: 24px 50% 0px 50%;
+        }
+
+        #link-text{
+            display: none; 
+            flex-direction: 
+            column; margin-top: 10px;
         }
 
     </style>
@@ -466,11 +473,11 @@
                         <label for="custom-color">Text Color:</label>
                         <input type="color" class="color-picker text-color" value="#ffffff">
                     </div>
-                    <div id="title-image" style="display: flex; flex-direction: column; margin-top: 10px;">
+                    <div id="link-text">
                         <label for="title-image">Change link text:</label>
                         <div style="display: flex; align-items: flex-start;">
-                            <input type="text" placeholder="Enter link text" value="See more">
-                            <button type="button" id="change-image-button">change</button>
+                            <input type="text" placeholder="Enter link text" value="See more" id="link-text-ip">
+                            <button type="button" id="change-link-text">change</button>
                         </div>
                     </div>
                 </div>
@@ -634,6 +641,8 @@
                 const modalImage = document.querySelector('.modal-content img');
                 modalImage.src = imageUrl;
             });
+        </script>
+        <script>
             const mailTypeImageUrls = {
                 event: 'https://c4.wallpaperflare.com/wallpaper/678/58/326/abstract-laser-optical-device-device-wallpaper-preview.jpg',
                 task: 'https://i.pinimg.com/564x/4d/97/ac/4d97ac381ab3c0cafd5c03a491278849.jpg',
@@ -668,12 +677,6 @@
                 document.querySelector('.modal-link').innerHTML = 'See more >'
             }
 
-            // document.querySelectorAll('.edit-btn:nth-child(even)')[1].addEventListener('click', function(){
-            //     document.querySelectorAll('.edit-modal')[1].style.display = 'flex'
-            //     document.querySelectorAll('.edit-modal')[2].style.display = 'flex'
-            //     document.querySelectorAll('.edit-btn')[1].style.display = 'none'
-            //     document.querySelectorAll('.edit-btn')[2].style.display = 'none'
-            // });
             document.addEventListener("DOMContentLoaded", function() {
                 const editButtons = document.querySelectorAll('.edit-btn');
                 const editModals = document.querySelectorAll('.edit-modal');
@@ -694,34 +697,19 @@
             document.getElementById('mail-url').addEventListener('input', function() {
                 const urlField = this.value.trim();
                 const modalLink = document.querySelector('.modal-link');
+                const lintText = document.getElementById('lint-text');
                 
-                if (urlField) {
+                if (urlField || document.getElementById('mail-type').value === 'task') {
                     modalLink.style.display = 'block';
+                    lintText.style.display = 'flex';
+                    modalLink.href = urlField
                     modalLink.addEventListener('click', function() {
                         window.open(urlField, '_blank');
-                    });
-                } else if (document.getElementById('mail-type').value === 'task'){
-                    modalLink.style.display = 'block';
-                    modalLink.addEventListener('click', function() {
-                        window.open(urlField, '_blank');
+                        // window.location = urlField;
                     });
                 } else {
                     modalLink.style.display = 'none';
-                }
-            });
-        
-            // Initial check on page load
-            document.addEventListener('DOMContentLoaded', function() {
-                const urlField = document.getElementById('mail-url').value.trim();
-                const modalLink = document.querySelector('.modal-link');
-                
-                if (urlField) {
-                    modalLink.style.display = 'block';
-                    modalLink.addEventListener('click', function() {
-                        window.open(urlField, '_blank');
-                    });
-                } else {
-                    modalLink.style.display = 'none';
+                    lintText.style.display = 'none';
                 }
             });
         </script>
@@ -738,6 +726,13 @@
         <script>
             document.querySelector('.cancel-btn').addEventListener('click', function() {
                 window.location.href = '/mails/';
+            });
+        </script>
+        <script>
+            document.getElementById('change-link-text').addEventListener('click', function(){
+                let text = document.getElementById('link-text-ip').value.trim();
+                text += ' >';
+                document.querySelector('.modal-link').innerHTML = text;
             });
         </script>
         
