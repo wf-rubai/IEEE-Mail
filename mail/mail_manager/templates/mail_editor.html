@@ -34,17 +34,13 @@
 
         .editor-container input[type="text"],
         .editor-container select,
-        .editor-container textarea {
+        .editor-container textarea,
+        .editor-container input[type="datetime-local"] {
             /* width: 100%; */
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
-        }
-
-        .editor-container textarea {
-            height: 200px;
-            resize: vertical;
         }
 
         .editor-buttons {
@@ -170,14 +166,30 @@
 
         .modal-content {
             background-color: #ffffff;
-            margin: 15px;
+            /* margin: 15px; */
             padding: 0px 20px 20px 20px;
             border: 1px solid #888;
             width: 500px;
             border-radius: 5px;
-            max-height: 600px;
-            overflow: auto;
+            height: 600px;
+            overflow-y: auto;
+            overflow-x: hidden;
             position: relative;
+        }
+
+        .edit-btn{
+            width: 40px;
+            height: 40px;
+            background: rgb(233, 233, 233);
+            border-radius: 50%;
+            margin: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .edit-btn:hover{
+            background: #ffffff;
         }
 
         .modal-content h1{
@@ -198,7 +210,7 @@
         }
 
         .edit-modal {
-            display: flex;
+            display: none;
             flex-direction: column;
             background-color: #ffffff;
             margin: 15px;
@@ -206,8 +218,6 @@
             border: 1px solid #888;
             width: 20%;
             border-radius: 5px;
-            /* position: fixed; */
-            /* right: 0; */
         }
 
         .modal-link{
@@ -217,6 +227,8 @@
             padding: 10px;
             width: fit-content;
             border-radius: 30px;
+            color: white;
+            cursor: pointer;
             /* box-shadow: inset -1px 1px 3px 0px; */
         }
 
@@ -235,7 +247,7 @@
             background: #ffffff;
         }
 
-        .edit-modal input[type="text"] {
+        .edit-modal input[type="text"], input[type="search"] {
             padding: 5px;
             margin-top: 5px;
             border: 1px solid #ccc;
@@ -257,6 +269,12 @@
             padding: 24px 50% 0px 50%;
         }
 
+        #link-text{
+            display: none; 
+            flex-direction: 
+            column; margin-top: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -269,7 +287,7 @@
 
         <div class="editor-container">
             <div style="display: flex; flex-direction: column; width: 100%;">
-                <label for="mail-title">Subject:</label>
+                <label for="mail-title">Mail Subject:</label>
                 <input type="text" id="mail-subject" placeholder="Enter email subject">
             </div>
 
@@ -281,7 +299,7 @@
         
                 <div style="display: flex; flex-direction: column; width: 30%;">
                     <label for="mail-type">Type:</label>
-                    <select id="mail-type">
+                    <select id="mail-type" style="padding: 9px;">
                         <option value="event">Event</option>
                         <option value="task">Task</option>
                         <option value="announcement">Announcement</option>
@@ -289,8 +307,20 @@
                     </select>
                 </div>
             </div>
+
+            <div id="task-components" style="display: none; justify-content: space-between;">
+                <div style="display: flex; flex-direction: column; width: 78%;">
+                    <label for="mail-title">Task Subject:</label>
+                    <input type="text" id="mail-title" placeholder="Enter email title">
+                </div>
+                <div style="display: flex; flex-direction: column; width: 20%;">
+                    <label for="deadline">Deadline:</label>
+                    <input type="datetime-local" id="deadline" style="padding: 9px;">
+                </div>
+
+            </div>
     
-            <label for="mail-url">Body:</label>
+            <label for="mail-url" id="mail-body">Body:</label>
             <div class="ckeditor">
                 <textarea placeholder="Describe the task..." class="form-control" type="text" name="task_description_details"></textarea>
                 <!-- <p id="task_descriptionCharacterCount" style="color: red;"></p> -->
@@ -303,7 +333,7 @@
     
             <label for="mail-receivers">Receivers:</label>
             <div style="display: flex; justify-content: flex-end;">
-                <input type="text" id="search-box" placeholder="Search by name or team">
+                <input type="search" id="search-box" placeholder="Search by name or team">
             </div>
 
             <div class="table-container">
@@ -391,19 +421,28 @@
             </div>
 
             <div id="viewModal" class="modal">
-                <div class="edit-modal" style="background-color: #41414100; border: 0;"></div>
-                <div class="modal-content">
-                    <div style="display: flex; justify-content: center; align-items: center;">
-                        <img src="https://c4.wallpaperflare.com/wallpaper/678/58/326/abstract-laser-optical-device-device-wallpaper-preview.jpg">
-                        <h1 id="modal-title"></h1>
+                <div class="edit-modal" style="background: none; border: 0;"></div>
+                <div style="display: flex;">
+                    <div class="edit-btn" style="background: none;"></div>
+                    <div class="modal-content">
+                        <div style="display: flex; justify-content: center; align-items: center;">
+                            <img src="https://c4.wallpaperflare.com/wallpaper/678/58/326/abstract-laser-optical-device-device-wallpaper-preview.jpg">
+                            <h1 id="modal-title" class="modal-title"></h1>
+                        </div>
+                        <div id="modal-body" style="font-size: 14px;"></div>
+                        <div class="modal-link">
+                            See more >
+                        </div>
+                        <p id="modal-datetime" style="margin-top: 50px; font-size: 13px;"></p>
+                        <p style="margin: 0; font-size: 13px;">Mail sent from</p>
+                        <p style="margin: 0; font-size: 14px;">INSB website</p>
                     </div>
-                    <div id="modal-body" style="font-size: 14px;"></div>
-                    <div class="modal-link">
-                        See more >
+                    <div class="edit-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                          </svg>
                     </div>
-                    <p id="modal-datetime" style="margin-top: 50px; font-size: 13px;"></p>
-                    <p style="margin: 0; font-size: 13px;">Mail sent from</p>
-                    <p style="margin: 0; font-size: 14px;">INSB website</p>
                 </div>
 
                 <div class="edit-modal">
@@ -421,6 +460,11 @@
                     </div>
                     
                     <div style="display: flex; flex-direction: column; margin-top: 10px;">
+                        <label for="custom-color">Title Text Color:</label>
+                        <input type="color" class="color-picker title-color" value="#ffffff">
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; margin-top: 10px;">
                         <label for="custom-color">Background Color:</label>
                         <input type="color" class="color-picker bg-color" value="#000208">
                     </div>
@@ -428,6 +472,13 @@
                     <div style="display: flex; flex-direction: column; margin-top: 10px;">
                         <label for="custom-color">Text Color:</label>
                         <input type="color" class="color-picker text-color" value="#ffffff">
+                    </div>
+                    <div id="link-text">
+                        <label for="title-image">Change link text:</label>
+                        <div style="display: flex; align-items: flex-start;">
+                            <input type="text" placeholder="Enter link text" value="See more" id="link-text-ip">
+                            <button type="button" id="change-link-text">change</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -498,15 +549,17 @@
         </script>
         <script>
             document.querySelector('.view-btn').addEventListener('click', function() {
-                // Get the title and body
                 let title = document.getElementById('mail-title').value;
-                let body = CKEDITOR.instances["task_description_details"].getData();
+                document.getElementById('modal-body').innerHTML = '';
                 
-                // Set the modal title and body
                 document.getElementById('modal-title').innerText = title;
-                document.getElementById('modal-body').innerHTML = body;
                 
-                // Set the date and time
+                if(document.getElementById('mail-type').value === 'task'){
+                    forTask();
+                }else{
+                    forOthers();
+                }
+
                 let currentDateTime = new Date();
                 let dateTimeString = currentDateTime.getUTCDate().toLocaleString();
                 dateTimeString += '/';
@@ -519,6 +572,16 @@
                 modal.style.alignItems = "center"
                 modal.style.justifyContent = "center"
             });
+
+            function forTask(){
+
+            }
+
+            function forOthers(){
+                let body = CKEDITOR.instances["task_description_details"].getData();
+                document.getElementById('modal-body').innerHTML = body;
+            }
+
             // Close the modal when the user clicks anywhere outside of the modal
             window.onclick = function(event) {
                 let modal = document.getElementById('viewModal');
@@ -531,8 +594,9 @@
             document.addEventListener("DOMContentLoaded", function () {
                 const colorPicker = document.querySelector('.bg-color');
                 const colorPickertext = document.querySelector('.text-color');
+                const colorPickerTitle = document.querySelector('.title-color');
                 const modalContent = document.querySelector('.modal-content');
-                const modalContentBody = document.querySelector('.modal-content');
+                const modalTitle = document.querySelector('.modal-title');
                 function updateBackgroundColor(color) {
                     modalContent.style.backgroundColor = color;
                 }
@@ -541,14 +605,22 @@
                     updateBackgroundColor(selectedColor);
                 });
                 function updateTextColor(color) {
-                    modalContentBody.style.color = color;
+                    modalContent.style.color = color;
                 }
                 colorPickertext.addEventListener('change', function() {
                     const selectedColor = this.value;
                     updateTextColor(selectedColor);
                 });
+                function updateTitleColor(color) {
+                    modalTitle.style.color = color;
+                }
+                colorPickerTitle.addEventListener('change', function() {
+                    const selectedColor = this.value;
+                    updateTitleColor(selectedColor);
+                });
                 updateBackgroundColor(colorPicker.value);
                 updateTextColor(colorPickertext.value);
+                updateTitleColor(colorPickerTitle.value);
             });
 
             document.addEventListener("DOMContentLoaded", function () {
@@ -562,14 +634,15 @@
                     }
                 });
             });
-        </script>
-        <script>
+            
             // Function to change the image based on the provided URL
             document.getElementById('change-image-button').addEventListener('click', function() {
                 const imageUrl = document.querySelector('#title-image input').value;
                 const modalImage = document.querySelector('.modal-content img');
                 modalImage.src = imageUrl;
             });
+        </script>
+        <script>
             const mailTypeImageUrls = {
                 event: 'https://c4.wallpaperflare.com/wallpaper/678/58/326/abstract-laser-optical-device-device-wallpaper-preview.jpg',
                 task: 'https://i.pinimg.com/564x/4d/97/ac/4d97ac381ab3c0cafd5c03a491278849.jpg',
@@ -581,35 +654,62 @@
                 const selectedType = this.value;
                 const modalImage = document.querySelector('.modal-content img');
                 modalImage.src = mailTypeImageUrls[selectedType];
+                if(selectedType === 'task'){
+                    isTask();
+                }else{
+                    isNotTask();
+                }
             });
+
+            function isTask(){
+                document.getElementById('mail-title').value = 'TASK'
+                document.getElementById('mail-subject').value = 'You have been Assigned a Task!'
+                document.getElementById('mail-body').innerHTML = 'Note:'
+                document.getElementById('task-components').style.display = 'flex' 
+                document.querySelector('.modal-link').innerHTML = 'Task details >'
+            }
+
+            function isNotTask(){
+                document.getElementById('mail-title').value = ''
+                document.getElementById('mail-subject').value = ''
+                document.getElementById('mail-body').innerHTML = 'Body:'
+                document.getElementById('task-components').style.display = 'none'
+                document.querySelector('.modal-link').innerHTML = 'See more >'
+            }
+
+            document.addEventListener("DOMContentLoaded", function() {
+                const editButtons = document.querySelectorAll('.edit-btn');
+                const editModals = document.querySelectorAll('.edit-modal');
+
+                // Adding event listener to the second edit button
+                editButtons[1].addEventListener('click', function() {
+                    editModals.forEach(modal => {
+                        modal.style.display = 'block'; // Show both edit-modals
+                    });
+                    editButtons.forEach(button => {
+                        button.style.display = 'none'; // Hide both edit-buttons
+                    });
+                });
+            });
+
         </script>
         <script>
             document.getElementById('mail-url').addEventListener('input', function() {
                 const urlField = this.value.trim();
                 const modalLink = document.querySelector('.modal-link');
+                const lintText = document.getElementById('lint-text');
                 
-                if (urlField) {
+                if (urlField || document.getElementById('mail-type').value === 'task') {
                     modalLink.style.display = 'block';
+                    lintText.style.display = 'flex';
+                    modalLink.href = urlField
                     modalLink.addEventListener('click', function() {
                         window.open(urlField, '_blank');
+                        // window.location = urlField;
                     });
                 } else {
                     modalLink.style.display = 'none';
-                }
-            });
-        
-            // Initial check on page load
-            document.addEventListener('DOMContentLoaded', function() {
-                const urlField = document.getElementById('mail-url').value.trim();
-                const modalLink = document.querySelector('.modal-link');
-                
-                if (urlField) {
-                    modalLink.style.display = 'block';
-                    modalLink.addEventListener('click', function() {
-                        window.open(urlField, '_blank');
-                    });
-                } else {
-                    modalLink.style.display = 'none';
+                    lintText.style.display = 'none';
                 }
             });
         </script>
@@ -621,6 +721,18 @@
         
                 // Initialize background color on page load
                 picker.style.backgroundColor = picker.value;
+            });
+        </script>
+        <script>
+            document.querySelector('.cancel-btn').addEventListener('click', function() {
+                window.location.href = '/mails/';
+            });
+        </script>
+        <script>
+            document.getElementById('change-link-text').addEventListener('click', function(){
+                let text = document.getElementById('link-text-ip').value.trim();
+                text += ' >';
+                document.querySelector('.modal-link').innerHTML = text;
             });
         </script>
         
