@@ -46,6 +46,7 @@
         .editor-buttons {
             display: flex;
             justify-content: flex-end;
+            margin-right: 5px;
         }
 
         .editor-buttons button {
@@ -236,6 +237,7 @@
             margin-bottom: 5px;
             font-weight: 100;
             font-size: medium;
+            font-style: italic;
         }
 
         .edit-modal button{
@@ -458,8 +460,29 @@
                 </div>
 
                 <div class="edit-modal">
-                    <h3 style="margin-top: 0;">Edit tools</h3>
-                    <div style="display: flex; align-items: flex-start;">
+                    <h3 style="margin-top: 0; text-align: center;">Edit tools</h3>
+                    <div style="display: flex; flex-direction: column; margin-top: 10px;">
+                        <label for="custom-color">Title Color:</label>
+                        <input type="color" class="color-picker title-color" value="#ffffff">
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; margin-top: 10px;">
+                        <label for="custom-color">Background Color:</label>
+                        <input type="color" class="color-picker bg-color" value="#ffffff">
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; margin-top: 10px;">
+                        <label for="custom-color">Text Color:</label>
+                        <input type="color" class="color-picker text-color" value="#000208">
+                    </div>
+                    <div id="link-text">
+                        <label for="title-image">Change link text:</label>
+                        <div style="display: flex; align-items: flex-start;">
+                            <input type="text" placeholder="Enter link text" value="See more" id="link-text-ip">
+                            <button type="button" id="change-link-text">change</button>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: flex-start; margin-top: 12px;">
                         <input type="checkbox" id="customize-image-checkbox">
                         <label for="customize-image-checkbox">Customize Mail Title Image</label>
                     </div>
@@ -468,28 +491,6 @@
                         <div style="display: flex; align-items: flex-start;">
                             <input type="text" placeholder="Enter image URL">
                             <button type="button" id="change-image-button">Add</button>
-                        </div>
-                    </div>
-                    
-                    <div style="display: flex; flex-direction: column; margin-top: 10px;">
-                        <label for="custom-color">Title Text Color:</label>
-                        <input type="color" class="color-picker title-color" value="#ffffff">
-                    </div>
-                    
-                    <div style="display: flex; flex-direction: column; margin-top: 10px;">
-                        <label for="custom-color">Background Color:</label>
-                        <input type="color" class="color-picker bg-color" value="#000208">
-                    </div>
-
-                    <div style="display: flex; flex-direction: column; margin-top: 10px;">
-                        <label for="custom-color">Text Color:</label>
-                        <input type="color" class="color-picker text-color" value="#ffffff">
-                    </div>
-                    <div id="link-text">
-                        <label for="title-image">Change link text:</label>
-                        <div style="display: flex; align-items: flex-start;">
-                            <input type="text" placeholder="Enter link text" value="See more" id="link-text-ip">
-                            <button type="button" id="change-link-text">change</button>
                         </div>
                     </div>
                 </div>
