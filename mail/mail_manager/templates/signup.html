@@ -119,6 +119,9 @@
             <input type="password" id="new-user-password" placeholder="Confirm your password">
             <div class="signup-btn">Sign Up</div>
             <div class="back-btn" onclick="loginPage()">Back to Login</div>
+            {% for message in messages %}
+            <p class="msg">{{message}}</p>
+            {% endfor %}
         </div>
 
         <script>
