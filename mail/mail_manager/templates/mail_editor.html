@@ -353,7 +353,7 @@
             <div id="task-components" style="display: none; justify-content: space-between;">
                 <div style="display: flex; flex-direction: column; width: 78%;">
                     <label for="mail-title">Task Subject:</label>
-                    <input type="text" id="mail-title" placeholder="Enter email title">
+                    <input type="text" id="task-subject" placeholder="Enter task subject">
                 </div>
                 <div style="display: flex; flex-direction: column; width: 20%;">
                     <label for="deadline">Deadline:</label>
@@ -472,6 +472,14 @@
                             <img src="https://c4.wallpaperflare.com/wallpaper/678/58/326/abstract-laser-optical-device-device-wallpaper-preview.jpg">
                             <h1 id="modal-title" class="modal-title"></h1>
                         </div>
+                        <div id="task-body">
+                            <p style="font-size: 14px;">Dear recipent</p>
+                            <p style="font-size: 14px;">You have been assigned a task - Write a report of this event. please follow the link below to view your task.</p>
+                            <p style="font-size: 14px;">You are requested to complete the task with in the due time. If not, you will be penalised daily 5% of your task point.</p>
+                            <p style="font-size: 14px;">Please follow the link or go through the portal for more details.</p>
+                            <p style="font-size: 14px;">Deadline : </p>
+                        </div>
+                        <p id="task-note" style="font-size: 16px; font-weight: bold; margin: 0;">Note: </p>
                         <div id="modal-body" style="font-size: 14px;"></div>
                         <div class="modal-link">
                             See more >
@@ -624,12 +632,28 @@
             });
 
             function forTask(){
+                document.getElementById('task-body').style.display = 'block';
+                let body = CKEDITOR.instances["task_description_details"].getData();
+                document.getElementById('modal-body').innerHTML = body;
+                console.log(body)
+                if(!(body === '')){
+                    document.getElementById('task-note').style.display = 'block';
+                }
 
+                const taskSubjectInput = document.getElementById('task-subject');
+                const deadlineInput = document.getElementById('deadline');
+                
+                const taskBody = document.getElementById('task-body');
+
+                    taskBody.innerHTML = taskBody.innerHTML.replace("Write a report of this event", `"${taskSubjectInput.value}"`);
+                    taskBody.innerHTML = taskBody.innerHTML.replace("Deadline : ", `Deadline : ${deadlineInput.value}`);
             }
 
             function forOthers(){
                 let body = CKEDITOR.instances["task_description_details"].getData();
                 document.getElementById('modal-body').innerHTML = body;
+                document.getElementById('task-body').style.display = 'none';
+                document.getElementById('task-note').style.display = 'none';
             }
 
             // Close the modal when the user clicks anywhere outside of the modal
