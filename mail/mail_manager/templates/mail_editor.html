@@ -166,13 +166,13 @@
         }
 
         .modal-content {
-            background-color: #ffffff;
+            background-color: #000000;
             /* margin: 15px; */
-            padding: 0px 20px 20px 20px;
+            padding: 0px 20px 0px 20px;
             border: 1px solid #888;
             width: 500px;
             border-radius: 5px;
-            height: 600px;
+            max-height: 600px;
             overflow-y: auto;
             overflow-x: hidden;
             position: relative;
@@ -203,16 +203,15 @@
         }
 
         .modal-content img{
-            width: 100%;
-            scale: 1.1;
-            position: sticky;
-            top: 0;
+            width: calc(100% + 40px);
+            position: relative;
             z-index: 1; /* Ensure the image stays below the h1 */
         }
 
         .edit-modal {
             display: none;
             flex-direction: column;
+            justify-content: right;
             background-color: #ffffff;
             margin: 15px;
             padding: 20px;
@@ -222,7 +221,9 @@
         }
 
         .modal-link{
-            margin-top: 30px;
+            display: none; 
+            margin-top: 20px;
+            margin-bottom: 20px;
             font-size: 13px;
             background: #714ad3;
             padding: 10px;
@@ -233,11 +234,22 @@
             /* box-shadow: inset -1px 1px 3px 0px; */
         }
 
+        .modal-end{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #202020;
+            color: #ffffff;
+            width: 100%;
+            position: relative;
+            left: -20px;
+            padding: 30px 20px 20px 20px;
+        }
+
         .edit-modal label {
             margin-bottom: 5px;
             font-weight: 100;
-            font-size: medium;
-            font-style: italic;
+            font-size: 14px;
         }
 
         .edit-modal button{
@@ -252,6 +264,7 @@
         .edit-modal input[type="text"], input[type="search"] {
             padding: 5px;
             margin-top: 5px;
+            margin-bottom: 0px;
             border: 1px solid #ccc;
             border-radius: 5px;
             width: 90%;
@@ -273,10 +286,26 @@
 
         #link-text{
             display: none; 
-            flex-direction: 
-            column; margin-top: 10px;
+            flex-direction: column; 
+            margin-top: 10px;
         }
-        .table-container::-webkit-scrollbar{
+
+        .close-button{
+            position: relative; 
+            cursor: pointer; 
+            font-size: 20px;
+            left: 100%;
+            top: -15px;
+            width: fit-content;
+            height: fit-content;
+            color: #ababab;
+        }
+
+        .close-button:hover{
+            color: #393939;
+            /* transition-duration: .4s; */
+        }
+        /* .table-container::-webkit-scrollbar{
             width: 6px;
             height: 6px;
         }
@@ -287,7 +316,7 @@
         }
         .table-container::-webkit-scrollbar-thumb:hover{
             background-color: rgb(169, 170, 170);
-        }
+        } */
     </style>
 </head>
 <body>
@@ -447,9 +476,16 @@
                         <div class="modal-link">
                             See more >
                         </div>
-                        <p id="modal-datetime" style="margin-top: 50px; font-size: 13px;"></p>
-                        <p style="margin: 0; font-size: 13px;">Mail sent from</p>
-                        <p style="margin: 0; font-size: 14px;">INSB website</p>
+                        <div class="modal-end">
+                            <div>
+                                <p id="modal-datetime" style="font-size: 13px;"></p>
+                                <p style="margin: 0; font-size: 13px;">Mail sent by</p>
+                                <p style="margin: 0; font-size: 14px;">Sender Name</p>
+                                <p style="margin: 0; font-size: 14px;">sender.mail@mail.com</p>
+                            </div>
+                            <img src="https://ieeensusb.org/static/logos/ieee-mb-blue-footer.png" alt="ieee-image" style="width: 150px; padding-bottom: 0px;">
+                            <img src="https://ieeensusb.org/media_files/main_website_files/toolkit_pictures/INSB-2.png" alt="insb-image" style="width: 100px; padding: 0 2px 0px 0;">
+                        </div>
                     </div>
                     <div class="edit-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -460,6 +496,7 @@
                 </div>
 
                 <div class="edit-modal">
+                    <div class="close-button">&times;</div>
                     <h3 style="margin-top: 0; text-align: center;">Edit tools</h3>
                     <div style="display: flex; flex-direction: column; margin-top: 10px;">
                         <label for="custom-color">Title Color:</label>
@@ -468,12 +505,12 @@
                     
                     <div style="display: flex; flex-direction: column; margin-top: 10px;">
                         <label for="custom-color">Background Color:</label>
-                        <input type="color" class="color-picker bg-color" value="#ffffff">
+                        <input type="color" class="color-picker bg-color" value="#000000">
                     </div>
 
                     <div style="display: flex; flex-direction: column; margin-top: 10px;">
                         <label for="custom-color">Text Color:</label>
-                        <input type="color" class="color-picker text-color" value="#000208">
+                        <input type="color" class="color-picker text-color" value="#e6e6e6">
                     </div>
                     <div id="link-text">
                         <label for="title-image">Change link text:</label>
@@ -486,7 +523,7 @@
                         <input type="checkbox" id="customize-image-checkbox">
                         <label for="customize-image-checkbox">Customize Mail Title Image</label>
                     </div>
-                    <div id="title-image" style="display: flex; flex-direction: column; margin-top: 10px; display: none;">
+                    <div id="title-image" style="display: flex; flex-direction: column; display: none;">
                         <label for="title-image">Title Image URL:</label>
                         <div style="display: flex; align-items: flex-start;">
                             <input type="text" placeholder="Enter image URL">
@@ -707,19 +744,20 @@
 
         </script>
         <script>
-            document.getElementById('mail-url').addEventListener('input', function() {
-                const urlField = this.value.trim();
+            document.querySelector('.view-btn').addEventListener('click', function() {
+                const urlField = document.getElementById('mail-url').value.trim();
                 const modalLink = document.querySelector('.modal-link');
-                const lintText = document.getElementById('lint-text');
+                const lintText = document.getElementById('link-text');
                 
                 if (urlField || document.getElementById('mail-type').value === 'task') {
                     modalLink.style.display = 'block';
                     lintText.style.display = 'flex';
-                    modalLink.href = urlField
-                    modalLink.addEventListener('click', function() {
+            
+                    modalLink.addEventListener('click', openLink);
+            
+                    function openLink(event) {
                         window.open(urlField, '_blank');
-                        // window.location = urlField;
-                    });
+                    }
                 } else {
                     modalLink.style.display = 'none';
                     lintText.style.display = 'none';
@@ -742,6 +780,17 @@
             });
         </script>
         <script>
+            const editButtons = document.querySelectorAll('.edit-btn');
+            const editModals = document.querySelectorAll('.edit-modal');
+            document.querySelector('.close-button').addEventListener('click', function() {
+                editModals.forEach(modal => {
+                    modal.style.display = 'none'; // Show both edit-modals
+                });
+                editButtons.forEach(button => {
+                    button.style.display = 'flex'; // Hide both edit-buttons
+                });
+            });
+
             document.getElementById('change-link-text').addEventListener('click', function(){
                 let text = document.getElementById('link-text-ip').value.trim();
                 text += ' >';
