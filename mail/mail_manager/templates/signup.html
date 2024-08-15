@@ -12,7 +12,9 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-image: url('https://4kwallpapers.com/images/wallpapers/black-abstract-dark-2880x1800-9729.jpg');
+            background-size: cover;
+            background-position: center;
             color: #414141;
         }
 
@@ -20,14 +22,17 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: white;
+            background: rgba(0, 0, 0, 0.3);
             padding: 30px;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(255 255 255 / 50%);
+            backdrop-filter: blur(10px);
+            border: 2px solid #ffffff77;
         }
 
         .signup-container h2 {
             margin-bottom: 20px;
+            color: #fff;
         }
 
         .signup-container input[type="text"],
@@ -83,21 +88,36 @@
         .back-btn:hover {
             background-color: #4cae4c;
         }
-        .msg{
-            font-weight: bold;
+
+        @media (min-width: 900px) {
+            form {
+                width: 30%;
+            }
         }
+
+        @media (max-width: 900px) {
+            form {
+                width: 40%;
+            }
+        }
+
+        @media (max-width: 550px) {
+            form {
+                width: 100%;
+                margin: 10px;
+            }
+        }
+
     </style>
 </head>
 <body>
-    <form style="width: 30%;" method="POST">
-        {% csrf_token %}
+<form>
         <div class="signup-container">
             <h2>Sign Up</h2>
-            <input type="text" id="user_username" name="user_username" placeholder="Enter your username">
-            <input type="password" id="user_password" name="user_password" placeholder="Enter your password">
-            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password">
-            <input type="text" id="user_email" name="user_email" placeholder="Enter your email">
-            <input type="submit" value="Sign Up" name="sign_up" class="signup-btn">
+            <input type="text" id="new-user-id" placeholder="Enter your ID">
+            <input type="password" id="new-user-password" placeholder="Enter your password">
+            <input type="password" id="new-user-password" placeholder="Confirm your password">
+            <div class="signup-btn">Sign Up</div>
             <div class="back-btn" onclick="loginPage()">Back to Login</div>
             {% for message in messages %}
             <p class="msg">{{message}}</p>
