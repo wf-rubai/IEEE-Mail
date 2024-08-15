@@ -126,7 +126,7 @@
         }
 
         th {
-            background-color: #005b89;
+            background-color: #8783fb;
             color: white;
             position: sticky;
             top: 0;
@@ -305,22 +305,88 @@
             color: #393939;
             /* transition-duration: .4s; */
         }
-        /* .table-container::-webkit-scrollbar{
-            width: 6px;
-            height: 6px;
+
+        @media only screen and (min-width: 650px) {
+            form{
+                width: 70%;
+            }
+            .modal{
+                flex-direction: row;
+            }
+            .main-modal{
+                flex-direction: row;
+            }
+            .pmd1{
+                width: 68%;
+            }
+            .pmd2{
+                width: 30%;
+            }
+            .pmd3{
+                width: 78%;
+            }
+            .pmd4{
+                width: 20%;
+            }
         }
-        .table-container::-webkit-scrollbar-thumb{
-            background-color: #e7eeef;
-            transition: all .6s ease-in-out;
-            border-radius: 4px;
+        
+        @media only screen and (max-width: 650px) {
+            form{
+                width: 100%;
+            }
+            .modal{
+                flex-direction: column;
+            }
+            .main-modal{
+                flex-direction: column;
+            }
+            .edit-modal{
+                width: 50%;
+            }
+            .pmd1{
+                width: 68%;
+            }
+            .pmd2{
+                width: 30%;
+            }
+            .pmd3{
+                width: 78%;
+            }
+            .pmd4{
+                width: 20%;
+            }
         }
-        .table-container::-webkit-scrollbar-thumb:hover{
-            background-color: rgb(169, 170, 170);
-        } */
+
+        @media only screen and (max-width: 475px) {
+            form{
+                width: 100%;
+            }
+            .modal{
+                flex-direction: column;
+            }
+            .main-modal{
+                flex-direction: column;
+            }
+            .modal-content{
+                max-width: 300px;
+            }
+            .edit-modal{
+                width: 300px;
+            }
+            .edit-btn{
+                scale: .9;
+            }
+            .title-type{
+                flex-direction: column;
+            }
+            .phn-mid {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
-    <form style="width: 70%;">
+    <form>
         <div style="display: flex; justify-content: center;">
             <h1>
                 COMPOSE EMAIL
@@ -333,13 +399,13 @@
                 <input type="text" id="mail-subject" placeholder="Enter email subject">
             </div>
 
-            <div style="display: flex; justify-content: space-between;">
-                <div style="display: flex; flex-direction: column; width: 68%;">
+            <div class="title-type" style="display: flex; justify-content: space-between;">
+                <div class="phn-mid pmd1" style="display: flex; flex-direction: column;">
                     <label for="mail-title">Title:</label>
                     <input type="text" id="mail-title" placeholder="Enter email title">
                 </div>
         
-                <div style="display: flex; flex-direction: column; width: 30%;">
+                <div class="phn-mid pmd2" style="display: flex; flex-direction: column;">
                     <label for="mail-type">Type:</label>
                     <select id="mail-type" style="padding: 9px;">
                         <option value="event">Event</option>
@@ -350,12 +416,12 @@
                 </div>
             </div>
 
-            <div id="task-components" style="display: none; justify-content: space-between;">
-                <div style="display: flex; flex-direction: column; width: 78%;">
+            <div id="task-components" class="title-type" style="display: none; justify-content: space-between;">
+                <div class="phn-mid pmd3" style="display: flex; flex-direction: column;">
                     <label for="mail-title">Task Subject:</label>
                     <input type="text" id="task-subject" placeholder="Enter task subject">
                 </div>
-                <div style="display: flex; flex-direction: column; width: 20%;">
+                <div class="phn-mid pmd4" style="display: flex; flex-direction: column;">
                     <label for="deadline">Deadline:</label>
                     <input type="datetime-local" id="deadline" style="padding: 9px;">
                 </div>
@@ -465,7 +531,7 @@
 
             <div id="viewModal" class="modal">
                 <div class="edit-modal" style="background: none; border: 0;"></div>
-                <div style="display: flex;">
+                <div class="main-modal" style="display: flex;">
                     <div class="edit-btn" style="background: none;"></div>
                     <div class="modal-content">
                         <div style="display: flex; justify-content: center; align-items: center;">
@@ -491,8 +557,8 @@
                                 <p style="margin: 0; font-size: 14px;">Sender Name</p>
                                 <p style="margin: 0; font-size: 14px;">sender.mail@mail.com</p>
                             </div>
-                            <img src="https://ieeensusb.org/static/logos/ieee-mb-blue-footer.png" alt="ieee-image" style="width: 150px; padding-bottom: 0px;">
-                            <img src="https://ieeensusb.org/media_files/main_website_files/toolkit_pictures/INSB-2.png" alt="insb-image" style="width: 100px; padding: 0 2px 0px 0;">
+                            <img src="https://ieeensusb.org/static/logos/ieee-mb-blue-footer.png" alt="ieee-image" style="width: calc(30% - 10px); padding-bottom: 0px;">
+                            <img src="https://ieeensusb.org/media_files/main_website_files/toolkit_pictures/INSB-2.png" alt="insb-image" style="width: calc(30% - 10px); padding: 0 2px 0px 0;">
                         </div>
                     </div>
                     <div class="edit-btn">
@@ -633,7 +699,8 @@
 
             function forTask(){
                 document.getElementById('task-body').style.display = 'block';
-                let body = CKEDITOR.instances["task_description_details"].getData();
+                document.getElementById('task-note').style.display = 'none';
+                let body = CKEDITOR.instances["task_description_details"].getData().trim();
                 document.getElementById('modal-body').innerHTML = body;
                 console.log(body)
                 if(!(body === '')){
@@ -644,9 +711,25 @@
                 const deadlineInput = document.getElementById('deadline');
                 
                 const taskBody = document.getElementById('task-body');
+                
+                const newP1 = document.createElement('p');
+                let str1 = 'You have been assigned a task - "';
+                str1 += taskSubjectInput.value;
+                str1 += '". please follow the link below to view your task.';
+                newP1.style.fontSize = '14px';
+                newP1.textContent = str1;
+                
+                const newP2 = document.createElement('p');
+                let str2 = 'Deadline : ';
+                str2 += deadlineInput.value;
+                newP2.style.fontSize = '14px';
+                newP2.textContent = str2;
+                
+                taskBody.insertBefore(newP1, taskBody.getElementsByTagName('p')[1]);
+                taskBody.insertBefore(newP2, taskBody.getElementsByTagName('p')[5]);
 
-                    taskBody.innerHTML = taskBody.innerHTML.replace("Write a report of this event", `"${taskSubjectInput.value}"`);
-                    taskBody.innerHTML = taskBody.innerHTML.replace("Deadline : ", `Deadline : ${deadlineInput.value}`);
+                taskBody.getElementsByTagName('p')[2].remove();
+                taskBody.getElementsByTagName('p')[5].remove();
             }
 
             function forOthers(){
@@ -663,7 +746,29 @@
                     modal.style.display = "none";
                 }
             }
-        </script>   
+            document.querySelector('.view-btn').addEventListener('click', function() {
+                const urlField = document.getElementById('mail-url').value.trim();
+                const modalLink = document.querySelector('.modal-link');
+                const lintText = document.getElementById('link-text');
+                
+                if (urlField || document.getElementById('mail-type').value === 'task') {
+                    modalLink.style.display = 'block';
+                    lintText.style.display = 'flex';
+
+                    modalLink.removeEventListener('click', openLink);
+                    modalLink.addEventListener('click', openLink);
+
+                    function openLink() {
+                        if (urlField) {
+                            window.open(urlField, '_blank');
+                        }
+                    }
+                } else {
+                    modalLink.style.display = 'none';
+                    lintText.style.display = 'none';
+                }
+            });
+        </script>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 const colorPicker = document.querySelector('.bg-color');
@@ -766,27 +871,6 @@
                 });
             });
 
-        </script>
-        <script>
-            document.querySelector('.view-btn').addEventListener('click', function() {
-                const urlField = document.getElementById('mail-url').value.trim();
-                const modalLink = document.querySelector('.modal-link');
-                const lintText = document.getElementById('link-text');
-                
-                if (urlField || document.getElementById('mail-type').value === 'task') {
-                    modalLink.style.display = 'block';
-                    lintText.style.display = 'flex';
-            
-                    modalLink.addEventListener('click', openLink);
-            
-                    function openLink(event) {
-                        window.open(urlField, '_blank');
-                    }
-                } else {
-                    modalLink.style.display = 'none';
-                    lintText.style.display = 'none';
-                }
-            });
         </script>
         <script>
             document.querySelectorAll('.color-picker').forEach(picker => {
