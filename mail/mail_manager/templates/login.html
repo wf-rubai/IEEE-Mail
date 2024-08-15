@@ -106,16 +106,24 @@
             }
         }
 
+        .msg{
+            font-weight: bold;
+            color: rgb(219, 217, 217);
+        }
     </style>
 </head>
 <body>
-    <form>
-        <div class="login-container">
-            <h2>Login</h2>
-            <input type="text" id="user-id" placeholder="Enter your ID">
-            <input type="password" id="user-password" placeholder="Enter your password">
-            <div class="login-btn">Login</div>
+        <form style="width: 30%;" method="post">
+            {% csrf_token %}
+            <div class="login-container">
+                <h2>Login</h2>
+            <input type="text" id="user_username" name="user_username" placeholder="Enter your username">
+            <input type="password" id="user_password" name="user_password" placeholder="Enter your password">
+            <input type="submit" value="Login" name="login" class="login-btn">
             <div class="signup-btn" onclick="signinPage()">Sign Up</div>
+            {% for message in messages %}
+            <p class="msg">{{message}}</p>
+            {% endfor %}
         </div>
 
         <script>
