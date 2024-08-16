@@ -121,10 +121,26 @@
             }
         }
 
+        .log_out{
+            margin-top: 20px;
+            text-decoration: none;
+            border: 1px solid rgb(227, 59, 59);
+            background: white;
+            color: rgb(227, 59, 59);
+            border-radius: 4px;
+            padding: 10px 15px;
+            transition: .3s all ease-in-out;
+        }
+        .log_out:hover{
+            background-color: rgb(227, 59, 59);
+            color: white;
+
+        }
     </style>    
 </head>
 <body>
-<form>
+<form method="POST">
+    {% csrf_token %}
         <div class="main-body">
             <div>
                 <h1 style="font-size: xxx-large">
@@ -196,13 +212,14 @@
                     </tbody>
                 </table>
             </div>
+            <input type="submit" value="Log Out" class="log_out" name="log_out">
         </div>
-
+        
         <script>
             function createNewMail() {
                 window.location.href = 'draft/';
             }
-        </script>
+            </script>
     </form>
 </body>
 </html>

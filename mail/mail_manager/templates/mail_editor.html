@@ -166,11 +166,11 @@
         }
 
         .modal-content {
-            background-color: #000000;
+            /* background-color: #000000; */
             /* margin: 15px; */
-            padding: 0px 20px 0px 20px;
+            /* padding: 0px 20px 0px 20px; */
             border: 1px solid #888;
-            width: 500px;
+            width: 850px;
             border-radius: 5px;
             max-height: 600px;
             overflow-y: auto;
@@ -195,17 +195,14 @@
 
         .modal-content h1{
             color: #ffffff;
-            max-width: 450px;
-            font-size: xxx-large;
-            font-family: sans-serif;
-            position: absolute;
-            z-index: 2; /* Ensure the h1 stays above the image */
         }
 
-        .modal-content img{
-            width: calc(100% + 40px);
+        .bg_img{
+            width: 100%;
             position: relative;
             z-index: 1; /* Ensure the image stays below the h1 */
+            height: 267px;
+            object-fit: cover;
         }
 
         .edit-modal {
@@ -222,28 +219,34 @@
 
         .modal-link{
             display: none; 
-            margin-top: 20px;
-            margin-bottom: 20px;
+            /* margin-top: 20px; */
+            /* margin-bottom: 20px;
             font-size: 13px;
             background: #714ad3;
             padding: 10px;
             width: fit-content;
-            border-radius: 30px;
-            color: white;
+            border-radius: 30px; */
+            color: #38B6FF; 
+            transition: .3s all ease-in-out;
             cursor: pointer;
             /* box-shadow: inset -1px 1px 3px 0px; */
+        }
+        .modal-link:hover{
+            color: #7199b0;
         }
 
         .modal-end{
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #202020;
+            /* align-items: center; */
+            background: #00629B;
             color: #ffffff;
-            width: 100%;
+            /* width: 100%; */
             position: relative;
-            left: -20px;
-            padding: 30px 20px 20px 20px;
+            /* left: -20px; */
+            padding: 10px 20px 10px 20px;
+            justify-content: center;
+            font-weight: bold;
+            /* font-family:sans-serif; */
         }
 
         .edit-modal label {
@@ -383,6 +386,60 @@
                 width: 100%;
             }
         }
+        .ieee_nsu_sb_title{
+            height: 68px;
+            background-color: #00629B;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+        #task-body{
+            display: block;
+            padding: 5px 24px;
+            background: whitesmoke;
+            margin: 22px;
+            border-radius: 6px;
+        }
+        .note{
+            background: white;
+            border-radius: 4px;
+            padding: 1px 20px;
+            margin-bottom: 21px;
+            margin-top: 50px;
+            border: 3px solid ;
+            border-style: dotted;
+        }
+        .logo{
+            width: 37px;
+        }
+        .modal_end_logo{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 23px;
+            /* border: 3px; */
+            /* border-style: dotted; */
+            /* border-radius: 5px; */
+            /* border-color: #00629B; */
+        }
+        .modal-content::-webkit-scrollbar{
+            width: 6px;
+            height: 6px;
+            background-color: whitesmoke;
+
+        }
+
+        .modal-content::-webkit-scrollbar-thumb{
+            background-color: #c6d8db;
+            transition: all .4s ease-in-out;
+            border-radius: 4px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover{
+            background-color: rgb(169, 170, 170);
+        }
     </style>
 </head>
 <body>
@@ -418,7 +475,7 @@
 
             <div id="task-components" class="title-type" style="display: none; justify-content: space-between;">
                 <div class="phn-mid pmd3" style="display: flex; flex-direction: column;">
-                    <label for="mail-title">Task Subject:</label>
+                    <label for="mail-title">Task Title:</label>
                     <input type="text" id="task-subject" placeholder="Enter task subject">
                 </div>
                 <div class="phn-mid pmd4" style="display: flex; flex-direction: column;">
@@ -534,31 +591,48 @@
                 <div class="main-modal" style="display: flex;">
                     <div class="edit-btn" style="background: none;"></div>
                     <div class="modal-content">
+                        <div class="ieee_nsu_sb_title">
+                            <img src="https://ieeensusb.org/static/logos/logo.gif" class="logo">
+                            <h1>IEEE NSU SB</h1>
+                            <img src="https://ieeensusb.org/static/logos/logo.gif" class="logo" style="opacity: 0;">
+                            
+                        </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
-                            <img src="https://c4.wallpaperflare.com/wallpaper/678/58/326/abstract-laser-optical-device-device-wallpaper-preview.jpg">
-                            <h1 id="modal-title" class="modal-title"></h1>
+                            <img class="bg_img" src="https://gammasoftbd.com/wp-content/uploads/2023/08/Graphics-02.jpg">
                         </div>
                         <div id="task-body">
-                            <p style="font-size: 14px;">Dear recipent</p>
-                            <p style="font-size: 14px;">You have been assigned a task - Write a report of this event. please follow the link below to view your task.</p>
-                            <p style="font-size: 14px;">You are requested to complete the task with in the due time. If not, you will be penalised daily 5% of your task point.</p>
-                            <p style="font-size: 14px;">Please follow the link or go through the portal for more details.</p>
-                            <p style="font-size: 14px;">Deadline : </p>
+                            <p>Hey X,</p>
+                            <p>You have been assigned a task -</p>
+                            <p id="task-note" style="font-size: 16px; font-weight: bold; margin: 0;"></p>
+                            <br>
+                            <div id="modal-body" style="font-size: 14px;"></div>
+                            <!-- <p id="modal-title" class="modal-title"></p> -->
+                             <br>
+                            <p>Please follow the link to view your task:</p>
+                                <p class="modal-link"></p>
+                            <br>
+                            <p>Deadline :</p>
+                            <p>Task Assigned by :</p>
+                            <br>
+                            <p>Best regards,</p>
+                            <p>IEEE NSU SB portal</p>
+                            <div class="note">
+                                <p style="font-weight: bold;">Note:</p>
+                                <p>You are requested to complete the task within the due date. If not, you will be penalised daily 5% of you task points</p>
+                            </div>
                         </div>
-                        <p id="task-note" style="font-size: 16px; font-weight: bold; margin: 0;">Note: </p>
-                        <div id="modal-body" style="font-size: 14px;"></div>
-                        <div class="modal-link">
-                            See more >
+                        <div class="modal_end_logo">
+                            <img src="https://ieeensusb.org/static/logos/ieee-mb-blue-footer.png" alt="ieee-image" style="width: calc(30% - 10px); padding-bottom: 0px;">
+                            <img src="https://ieeensusb.org/media_files/main_website_files/toolkit_pictures/INSB-2.png" alt="insb-image" style="width: calc(30% - 10px); padding: 0 2px 0px 0;">
                         </div>
                         <div class="modal-end">
-                            <div>
+                            <!-- <div>
                                 <p id="modal-datetime" style="font-size: 13px;"></p>
                                 <p style="margin: 0; font-size: 13px;">Mail sent by</p>
                                 <p style="margin: 0; font-size: 14px;">Sender Name</p>
                                 <p style="margin: 0; font-size: 14px;">sender.mail@mail.com</p>
-                            </div>
-                            <img src="https://ieeensusb.org/static/logos/ieee-mb-blue-footer.png" alt="ieee-image" style="width: calc(30% - 10px); padding-bottom: 0px;">
-                            <img src="https://ieeensusb.org/media_files/main_website_files/toolkit_pictures/INSB-2.png" alt="insb-image" style="width: calc(30% - 10px); padding: 0 2px 0px 0;">
+                            </div> -->
+                                <p>This is an automated message. Please do not reply</p>
                         </div>
                     </div>
                     <div class="edit-btn">
@@ -572,19 +646,19 @@
                 <div class="edit-modal">
                     <div class="close-button">&times;</div>
                     <h3 style="margin-top: 0; text-align: center;">Edit tools</h3>
-                    <div style="display: flex; flex-direction: column; margin-top: 10px;">
+                    <div style="display: none; flex-direction: column; margin-top: 10px;">
                         <label for="custom-color">Title Color:</label>
-                        <input type="color" class="color-picker title-color" value="#ffffff">
+                        <input type="color" class="color-picker title-color" value="#000000">
                     </div>
                     
                     <div style="display: flex; flex-direction: column; margin-top: 10px;">
                         <label for="custom-color">Background Color:</label>
-                        <input type="color" class="color-picker bg-color" value="#000000">
+                        <input type="color" class="color-picker bg-color" value="#ffffff">
                     </div>
 
                     <div style="display: flex; flex-direction: column; margin-top: 10px;">
                         <label for="custom-color">Text Color:</label>
-                        <input type="color" class="color-picker text-color" value="#e6e6e6">
+                        <input type="color" class="color-picker text-color" value="#000000">
                     </div>
                     <div id="link-text">
                         <label for="title-image">Change link text:</label>
@@ -676,7 +750,7 @@
                 let title = document.getElementById('mail-title').value;
                 document.getElementById('modal-body').innerHTML = '';
                 
-                document.getElementById('modal-title').innerText = title;
+                // document.getElementById('modal-title').innerText = title;
                 
                 if(document.getElementById('mail-type').value === 'task'){
                     forTask();
@@ -690,7 +764,7 @@
                 dateTimeString += currentDateTime.getMonth().toLocaleString();
                 dateTimeString += '/';
                 dateTimeString += currentDateTime.getFullYear().toLocaleString().replace(',','');
-                document.getElementById('modal-datetime').innerText = dateTimeString;
+                // document.getElementById('modal-datetime').innerText = dateTimeString;
                 let modal = document.getElementById('viewModal');
                 modal.style.display = "flex";
                 modal.style.alignItems = "center"
@@ -699,13 +773,13 @@
 
             function forTask(){
                 document.getElementById('task-body').style.display = 'block';
-                document.getElementById('task-note').style.display = 'none';
+                // document.getElementById('task-note').style.display = 'none';
                 let body = CKEDITOR.instances["task_description_details"].getData().trim();
                 document.getElementById('modal-body').innerHTML = body;
-                console.log(body)
-                if(!(body === '')){
-                    document.getElementById('task-note').style.display = 'block';
-                }
+                // console.log(body)
+                // if(!(body === '')){
+                //     document.getElementById('task-note').style.display = 'block';
+                // }
 
                 const taskSubjectInput = document.getElementById('task-subject');
                 const deadlineInput = document.getElementById('deadline');
@@ -713,23 +787,42 @@
                 const taskBody = document.getElementById('task-body');
                 
                 const newP1 = document.createElement('p');
-                let str1 = 'You have been assigned a task - "';
+                let str1 = '';
                 str1 += taskSubjectInput.value;
-                str1 += '". please follow the link below to view your task.';
-                newP1.style.fontSize = '14px';
                 newP1.textContent = str1;
                 
                 const newP2 = document.createElement('p');
+                newP2.style.fontWeight = "bold"
                 let str2 = 'Deadline : ';
                 str2 += deadlineInput.value;
-                newP2.style.fontSize = '14px';
                 newP2.textContent = str2;
-                
-                taskBody.insertBefore(newP1, taskBody.getElementsByTagName('p')[1]);
-                taskBody.insertBefore(newP2, taskBody.getElementsByTagName('p')[5]);
 
-                taskBody.getElementsByTagName('p')[2].remove();
-                taskBody.getElementsByTagName('p')[5].remove();
+                const newP3 = document.createElement('p');
+                newP3.style.fontWeight = "bold"
+                let str3 = 'Task Assigned By : ';
+                str3 += 'helloooo';
+                newP3.textContent = str3;
+                
+                if(body){
+                    taskBody.insertBefore(newP1, taskBody.getElementsByTagName('p')[2]);
+                    taskBody.insertBefore(newP3, taskBody.getElementsByTagName('p')[7]);
+                    taskBody.insertBefore(newP2, taskBody.getElementsByTagName('p')[7]);
+                    taskBody.getElementsByTagName('p')[3].remove();
+                    taskBody.getElementsByTagName('p')[8].remove();
+                    taskBody.getElementsByTagName('p')[8].remove();
+                }
+                else {
+                    taskBody.insertBefore(newP1, taskBody.getElementsByTagName('p')[2]);
+                    taskBody.insertBefore(newP3, taskBody.getElementsByTagName('p')[6]);
+                    taskBody.insertBefore(newP2, taskBody.getElementsByTagName('p')[6]);
+                    taskBody.getElementsByTagName('p')[3].remove();
+                    taskBody.getElementsByTagName('p')[7].remove();
+                    taskBody.getElementsByTagName('p')[7].remove();
+                }
+
+                // console.log(taskBody.getElementsByTagName('p')[2])
+                // console.log(taskBody.getElementsByTagName('p')[7])
+                // console.log(taskBody.getElementsByTagName('p')[7])
             }
 
             function forOthers(){
@@ -775,7 +868,7 @@
                 const colorPickertext = document.querySelector('.text-color');
                 const colorPickerTitle = document.querySelector('.title-color');
                 const modalContent = document.querySelector('.modal-content');
-                const modalTitle = document.querySelector('.modal-title');
+                // const modalTitle = document.querySelector('.modal-title');
                 function updateBackgroundColor(color) {
                     modalContent.style.backgroundColor = color;
                 }
@@ -824,7 +917,7 @@
         <script>
             const mailTypeImageUrls = {
                 event: 'https://c4.wallpaperflare.com/wallpaper/678/58/326/abstract-laser-optical-device-device-wallpaper-preview.jpg',
-                task: 'https://i.pinimg.com/564x/4d/97/ac/4d97ac381ab3c0cafd5c03a491278849.jpg',
+                task: 'https://gammasoftbd.com/wp-content/uploads/2023/08/Graphics-02.jpg',
                 announcement: 'https://static.vecteezy.com/system/resources/previews/011/171/975/non_2x/shouting-megaphone-illustration-on-blue-banner-background-concept-of-join-us-job-vacancy-and-announcement-in-modern-flat-cartoon-style-design-vector.jpg',
                 others: 'https://taylorhieber.co/wp-content/uploads/2021/11/Gradients-Classic.jpg'
             };
@@ -832,7 +925,7 @@
             document.getElementById('mail-type').addEventListener('change', function() {
                 const selectedType = this.value;
                 const modalImage = document.querySelector('.modal-content img');
-                modalImage.src = mailTypeImageUrls[selectedType];
+                // modalImage.src = mailTypeImageUrls[selectedType];
                 if(selectedType === 'task'){
                     isTask();
                 }else{
@@ -843,9 +936,9 @@
             function isTask(){
                 document.getElementById('mail-title').value = 'TASK'
                 document.getElementById('mail-subject').value = 'You have been Assigned a Task!'
-                document.getElementById('mail-body').innerHTML = 'Note:'
+                document.getElementById('mail-body').innerHTML = 'Instructions:'
                 document.getElementById('task-components').style.display = 'flex' 
-                document.querySelector('.modal-link').innerHTML = 'Task details >'
+                document.querySelector('.modal-link').innerHTML = 'See more'
             }
 
             function isNotTask(){
@@ -853,7 +946,7 @@
                 document.getElementById('mail-subject').value = ''
                 document.getElementById('mail-body').innerHTML = 'Body:'
                 document.getElementById('task-components').style.display = 'none'
-                document.querySelector('.modal-link').innerHTML = 'See more >'
+                document.querySelector('.modal-link').innerHTML = 'See more'
             }
 
             document.addEventListener("DOMContentLoaded", function() {
@@ -901,7 +994,6 @@
 
             document.getElementById('change-link-text').addEventListener('click', function(){
                 let text = document.getElementById('link-text-ip').value.trim();
-                text += ' >';
                 document.querySelector('.modal-link').innerHTML = text;
             });
         </script>
