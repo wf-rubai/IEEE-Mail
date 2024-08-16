@@ -147,6 +147,9 @@
                     MAILS
                 </h1>
             </div>
+            {% for message in messages %}
+            <p class="msg">{{message}}</p>
+            {% endfor %}
             <div class="mail-btn" onclick="createNewMail()">Create New</div>
             <div class="table-container">
                 <table>

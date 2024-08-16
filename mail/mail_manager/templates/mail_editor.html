@@ -443,7 +443,8 @@
     </style>
 </head>
 <body>
-    <form>
+    <form method="POST">
+        {% csrf_token %}
         <div style="display: flex; justify-content: center;">
             <h1>
                 COMPOSE EMAIL
@@ -453,13 +454,13 @@
         <div class="editor-container">
             <div style="display: flex; flex-direction: column; width: 100%;">
                 <label for="mail-title">Mail Subject:</label>
-                <input type="text" id="mail-subject" placeholder="Enter email subject">
+                <input type="text" id="mail-subject" name="mail-subject" placeholder="Enter email subject">
             </div>
 
             <div class="title-type" style="display: flex; justify-content: space-between;">
                 <div class="phn-mid pmd1" style="display: flex; flex-direction: column;">
                     <label for="mail-title">Title:</label>
-                    <input type="text" id="mail-title" placeholder="Enter email title">
+                    <input type="text" id="mail-title" name="mail-title" placeholder="Enter email title">
                 </div>
         
                 <div class="phn-mid pmd2" style="display: flex; flex-direction: column;">
@@ -476,11 +477,11 @@
             <div id="task-components" class="title-type" style="display: none; justify-content: space-between;">
                 <div class="phn-mid pmd3" style="display: flex; flex-direction: column;">
                     <label for="mail-title">Task Title:</label>
-                    <input type="text" id="task-subject" placeholder="Enter task subject">
+                    <input type="text" id="task-subject" name="task-subject" placeholder="Enter task subject">
                 </div>
                 <div class="phn-mid pmd4" style="display: flex; flex-direction: column;">
                     <label for="deadline">Deadline:</label>
-                    <input type="datetime-local" id="deadline" style="padding: 9px;">
+                    <input type="datetime-local" id="deadline" name="deadline" style="padding: 9px;">
                 </div>
 
             </div>
@@ -493,7 +494,7 @@
 
             <div style="display: flex; flex-direction: column; width: 100%;">
                 <label for="mail-title">Additional Link:</label>
-                <input type="text" id="mail-url" placeholder="Enter URL">
+                <input type="text" id="mail-url" name="mail-url" placeholder="Enter URL">
             </div>
     
 
@@ -583,7 +584,8 @@
             <div class="editor-buttons">
                 <button type="button" class="cancel-btn">Cancel</button>
                 <button type="button" class="view-btn">View</button>
-                <button type="button" class="send-btn">Send</button>
+                <!-- <button type="button" class="send-btn">Send</button> -->
+                <input type="submit" value="Send" class="send-btn" name="send-btn">
             </div>
 
             <div id="viewModal" class="modal">
@@ -598,7 +600,7 @@
                             
                         </div>
                         <div style="display: flex; justify-content: center; align-items: center;">
-                            <img class="bg_img" src="https://gammasoftbd.com/wp-content/uploads/2023/08/Graphics-02.jpg">
+                            <img class="bg_img" name="email_img" src="https://gammasoftbd.com/wp-content/uploads/2023/08/Graphics-02.jpg">
                         </div>
                         <div id="task-body">
                             <p>Hey X,</p>

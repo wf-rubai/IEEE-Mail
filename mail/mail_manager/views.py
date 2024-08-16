@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import auth,User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from .renderData import Data_Manipulation
 # Create your views here.
 
 def signup(request):
@@ -66,6 +66,24 @@ def mail_table(request):
 
 @login_required
 def mail_editor(request):
+
+    if request.method == "POST":
+        
+        if request.POST.get("send-btn"):
+
+            mail_subject = request.POST.get('mail-subject')
+            task_title = request.POST.get('task-subject')
+            deadline = request.POST.get('deadline')
+            description = request.POST.get('task_description_details')
+            additional_link = request.POST.get('mail-url')
+
+            if Data_Manipulation.save_email_data(mail_subject,task_title,deadline,description,additional_link):
+                messages.success(request,"Email Sent")
+            else:
+                messages.error(request,"Error Sending Email")
+
+            return redirect('mail:mail_table')
+
     return render(request,'mail_editor.html')
 
 @login_required
