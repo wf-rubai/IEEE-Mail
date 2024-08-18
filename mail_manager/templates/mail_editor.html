@@ -386,7 +386,8 @@
     </style>
 </head>
 <body>
-    <form>
+    <form method="POST">
+        {% csrf_token %}
         <div style="display: flex; justify-content: center;">
             <h1>
                 COMPOSE EMAIL
@@ -526,7 +527,7 @@
             <div class="editor-buttons">
                 <button type="button" class="cancel-btn">Cancel</button>
                 <button type="button" class="view-btn">View</button>
-                <button type="button" class="send-btn">Send</button>
+                <button type="submit" name="send_email" class="send-btn">Send</button>
             </div>
 
             <div id="viewModal" class="modal">

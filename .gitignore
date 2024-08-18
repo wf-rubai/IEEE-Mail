@@ -5,7 +5,7 @@
 *.pot
 *.pyc
 *.swp
-**/main/__pycache__
+**/__pycache__
 db.sqlite3
 media
 
@@ -151,3 +151,4 @@ database-info.txt
 
 #Project Files
 User Files/
+MailPictures/
