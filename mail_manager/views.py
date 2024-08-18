@@ -1,6 +1,9 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import auth,User
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
+from mail_manager.email_handler import EmailHandler
 
 # Create your views here.
 
@@ -52,11 +55,25 @@ def login(request):
 
     return render(request,'login.html')
 
+@login_required
+def logout(request):
+    auth.logout(request)
+    return redirect('mail:login')
+
+@login_required
 def mail_table(request):
     return render(request,'mail_table.html')
 
+@login_required
 def mail_editor(request):
+
+    if request.method == 'POST':
+        if 'send_email' in request.POST:
+            EmailHandler.send_emails(request)
+        return redirect('mail:mail_editor')
+
     return render(request,'mail_editor.html')
 
+@login_required
 def mail_view(request):
     return render(request,'mail_view.html')

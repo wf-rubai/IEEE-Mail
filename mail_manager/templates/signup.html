@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Sign Up Page</title>
     <style>
         body {
             display: flex;
@@ -17,8 +17,8 @@
             background-position: center;
             color: #414141;
         }
-        
-        .login-container {
+
+        .signup-container {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -30,13 +30,13 @@
             border: 2px solid #ffffff77;
         }
 
-        .login-container h2 {
+        .signup-container h2 {
             margin-bottom: 20px;
             color: #fff;
         }
 
-        .login-container input[type="text"],
-        .login-container input[type="password"] {
+        .signup-container input[type="text"],
+        .signup-container input[type="password"] {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -44,7 +44,7 @@
             border-radius: 5px;
         }
 
-        .login-container button {
+        .signup-container button {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -52,23 +52,6 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-        }
-
-        .login-btn {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #5c5fb8;
-            color: #ffffff;
-        }
-
-        .login-btn:hover {
-            background-color: #5054c3;
         }
 
         .signup-btn {
@@ -77,14 +60,33 @@
             width: 100%;
             padding: 10px;
             border: none;
+            margin: 10px 0;
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-            color: #ffffff;
+            background-color: #725bde;
+            color: white;
         }
 
         .signup-btn:hover {
-            background-color: #c4c4c475;
+            background-color: #6851cf;
+        }
+
+        .back-btn {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #5cb85c;
+            color: white;
+        }
+
+        .back-btn:hover {
+            background-color: #4cae4c;
         }
 
         @media (min-width: 900px) {
@@ -109,21 +111,25 @@
     </style>
 </head>
 <body>
-    <form>
-        <div class="login-container">
-            <h2>Login</h2>
-            <input type="text" id="user-id" placeholder="Enter your ID">
-            <input type="password" id="user-password" placeholder="Enter your password">
-            <div class="login-btn">Login</div>
-            <div class="signup-btn" onclick="signinPage()">Sign Up</div>
+<form method="POST">
+    {% csrf_token %}
+        <div class="signup-container">
+            <h2>Sign Up</h2>
+            <input type="text" name="user_username" id="new-user-id" placeholder="Enter your ID">
+            <input type="password" name="user_password" id="new-user-password" placeholder="Enter your password">
+            <input type="password" name="confirm_password" id="new-user-password" placeholder="Confirm your password">
+            <input type="submit" name="sign_up" class="signup-btn">
+            <div class="back-btn" onclick="loginPage()">Back to Login</div>
+            {% for message in messages %}
+            <p class="msg">{{message}}</p>
+            {% endfor %}
         </div>
 
         <script>
-            function signinPage() {
-                window.location.href = '/signup/';
+            function loginPage() {
+                window.location.href = '{% url 'mail:login' %}';
             }
         </script>
     </form>
-    
 </body>
 </html>

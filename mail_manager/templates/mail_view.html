@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+        .table-container {
+            width: 100%;
+            max-height: 314px;
+            overflow-y: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            /* overflow: hidden; */
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #8783fb;
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        tbody tr:hover {
+            background-color: #ddd;
+        }
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #000000;
+            /* margin: 15px; */
+            padding: 0px 20px 0px 20px;
+            border: 1px solid #888;
+            width: 500px;
+            border-radius: 5px;
+            /* max-height: 600px; */
+            /* overflow-y: auto;
+            overflow-x: hidden; */
+            position: relative;
+        }
+
+        .modal-content h1{
+            color: #ffffff;
+            max-width: 450px;
+            font-size: xxx-large;
+            font-family: sans-serif;
+            position: absolute;
+            z-index: 2; /* Ensure the h1 stays above the image */
+        }
+
+        .modal-content img{
+            width: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1; /* Ensure the image stays below the h1 */
+        }
+
+        .modal-link{
+            display: none; 
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            background: #714ad3;
+            padding: 10px;
+            width: fit-content;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            /* box-shadow: inset -1px 1px 3px 0px; */
+        }
+
+        .modal-end{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #202020;
+            color: #ffffff;
+            width: 100%;
+            position: relative;
+            left: -20px;
+            padding: 30px 20px 20px 20px;
+        }
+
+        #link-text{
+            display: none; 
+            flex-direction: column; 
+            margin-top: 10px;
+        }
+
+        .close-button{
+            position: relative; 
+            cursor: pointer; 
+            font-size: 20px;
+            left: 100%;
+            top: -15px;
+            width: fit-content;
+            height: fit-content;
+            color: #ababab;
+        }
+
+        .close-button:hover{
+            color: #393939;
+            /* transition-duration: .4s; */
+        }
+
+        @media only screen and (min-width: 650px) {
+            form{
+                width: 70%;
+            }
+            .modal{
+                flex-direction: row;
+            }
+            .main-modal{
+                flex-direction: row;
+            }
+            .pmd1{
+                width: 68%;
+            }
+            .pmd2{
+                width: 30%;
+            }
+            .pmd3{
+                width: 78%;
+            }
+            .pmd4{
+                width: 20%;
+            }
+        }
+        
+        @media only screen and (max-width: 650px) {
+            form{
+                width: 100%;
+            }
+            .modal{
+                flex-direction: column;
+            }
+            .main-modal{
+                flex-direction: column;
+            }
+            .edit-modal{
+                width: 50%;
+            }
+            .pmd1{
+                width: 68%;
+            }
+            .pmd2{
+                width: 30%;
+            }
+            .pmd3{
+                width: 78%;
+            }
+            .pmd4{
+                width: 20%;
+            }
+        }
+
+        @media only screen and (max-width: 475px) {
+            form{
+                width: 100%;
+            }
+            .modal{
+                flex-direction: column;
+            }
+            .main-modal{
+                flex-direction: column;
+            }
+            .modal-content{
+                max-width: 300px;
+            }
+            .edit-modal{
+                width: 300px;
+            }
+            .edit-btn{
+                scale: .9;
+            }
+            .title-type{
+                flex-direction: column;
+            }
+            .phn-mid {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body style="display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #414141;">
+    <div id="viewModal" style="margin: 0px auto">
+        <div class="main-modal" style="display: flex;">
+            <div class="modal-content">
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <img src="https://c4.wallpaperflare.com/wallpaper/678/58/326/abstract-laser-optical-device-device-wallpaper-preview.jpg">
+                    <h1 id="modal-title" class="modal-title"></h1>
+                </div>
+                <div id="task-body">
+                    <p style="font-size: 14px;">Dear recipent</p>
+                    <p style="font-size: 14px;">You have been assigned a task - Write a report of this event. please follow the link below to view your task.</p>
+                    <p style="font-size: 14px;">You are requested to complete the task with in the due time. If not, you will be penalised daily 5% of your task point.</p>
+                    <p style="font-size: 14px;">Please follow the link or go through the portal for more details.</p>
+                    <p style="font-size: 14px;">Deadline : </p>
+                </div>
+                <p id="task-note" style="font-size: 16px; font-weight: bold; margin: 0;">Note: </p>
+                <div id="modal-body" style="font-size: 14px;"></div>
+                <div class="modal-link">
+                    See more >
+                </div>
+                <div class="modal-end">
+                    <div>
+                        <p id="modal-datetime" style="font-size: 13px;"></p>
+                        <p style="margin: 0; font-size: 13px;">Mail sent by</p>
+                        <p style="margin: 0; font-size: 14px;">Sender Name</p>
+                        <p style="margin: 0; font-size: 14px;">sender.mail@mail.com</p>
+                    </div>
+                    <img src="https://ieeensusb.org/static/logos/ieee-mb-blue-footer.png" alt="ieee-image" style="width: calc(30% - 10px); padding-bottom: 0px;">
+                    <img src="https://ieeensusb.org/media_files/main_website_files/toolkit_pictures/INSB-2.png" alt="insb-image" style="width: calc(30% - 10px); padding: 0 2px 0px 0;">
+                </div>
+            </div>
+        </div>
+</body>
+</html>
